@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BMI Calculator</title>
+  <style>
+    /* Apple-Inspired Styling */
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+        background-color: #f5f5f7;
+        color: #1d1d1f;
+        text-align: center;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 600px;
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        margin: auto;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: 500;
+        display: block;
+        margin-top: 20px;
+    }
+
+    input {
+        width: 100%;
+        max-width: 200px;
+        padding: 10px;
+        border: 1px solid #d2d2d7;
+        border-radius: 8px;
+        font-size: 16px;
+        text-align: center;
+        margin-top: 8px;
+        transition: all 0.3s ease;
+    }
+
+    input:focus {
+        border-color: #0071e3;
+        outline: none;
+        box-shadow: 0 0 8px rgba(0, 113, 227, 0.3);
+    }
+
+    button {
+        background: #0071e3;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        margin-top: 20px;
+    }
+
+    button:hover {
+        background: #005bb5;
+    }
+
+    .result {
+        margin-top: 30px;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .bmi-value {
+        font-size: 28px;
+        font-weight: bold;
+        color: #0071e3;
+    }
+
+    .comment {
+        margin-top: 10px;
+        font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>BMI Calculator</h1>
+    
+    <label for="weight">Weight (kg)</label>
+    <input type="number" id="weight" placeholder="e.g. 70">
+
+    <label for="height">Height (cm)</label>
+    <input type="number" id="height" placeholder="e.g. 175">
+
+    <button onclick="calculateBMI()">Calculate BMI</button>
+
+    <div class="result" id="result" style="display:none;">
+      Your BMI is: <span class="bmi-value" id="bmi"></span>
+      <div class="comment" id="comment"></div>
+    </div>
+  </div>
+
+  <script>
+    function calculateBMI() {
+      const weight = parseFloat(document.getElementById('weight').value);
+      const heightCm = parseFloat(document.getElementById('height').value);
+
+      if (isNaN(weight) || isNaN(heightCm) || heightCm <= 0 || weight <= 0) {
+        alert("Please enter valid height and weight.");
+        return;
+      }
+
+      const heightM = heightCm / 100;
+      const bmi = weight / (heightM * heightM);
+      const bmiRounded = bmi.toFixed(1);
+
+      let comment = "";
+      if (bmi < 16.5) {
+        comment = "Severely underweight – Likely decline or special underwriting required.";
+      } else if (bmi < 18.5) {
+        comment = "Underweight – Possible standard, depending on build and history.";
+      } else if (bmi < 25) {
+        comment = "Normal range – Standard rate.";
+      } else if (bmi < 30) {
+        comment = "Overweight – Might attract minor loading depending on other factors.";
+      } else if (bmi < 35) {
+        comment = "Obese Class I – Likely substandard with loading.";
+      } else if (bmi < 40) {
+        comment = "Obese Class II – High loading or possible decline.";
+      } else {
+        comment = "Obese Class III – Likely decline.";
+      }
+
+      document.getElementById('bmi').innerText = bmiRounded;
+      document.getElementById('comment').innerText = comment;
+      document.getElementById('result').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
